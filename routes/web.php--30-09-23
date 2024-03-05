@@ -1,0 +1,275 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    return "Cleared!";
+});
+//
+
+Route :: get('/', 'HomeController@index');
+Route :: get('/about-us', 'HomeController@about');
+Route :: get('/about-sona', 'HomeController@about_sona');
+Route :: get('/our-essence', 'HomeController@our_essence');
+Route :: get('/our-methods', 'HomeController@our_methods');
+Route :: get('/contact-us',  'HomeController@contact');
+Route :: get('/certifications',  'HomeController@certifications');
+Route :: get('/the-health-box',  'HomeController@the_health_box');
+Route :: get('/our-story',  'HomeController@our_story');
+
+Route :: get('/our-strength',  'HomeController@our_strength');
+Route :: get('/our-team',  'HomeController@our_team');
+Route :: get('/our-associatespartners',  'HomeController@our_associatespartners');
+Route :: get('/event-media',  'HomeController@event_media');
+Route :: get('/photo-gallery',  'HomeController@photo_gallery');
+
+
+Route :: get('/disclaimer',  'HomeController@disclaimer');
+Route :: get('/help-&-faq',  'HomeController@help_faq');
+
+
+Route :: get('/terms-and-conditions',  'HomeController@terms_and_conditions');
+Route :: get('/privacy-policy',  'HomeController@privacy_policy');
+Route :: get('/refund-and-cancellation',  'HomeController@refund_and_cancellation');
+Route :: get('/shipping-and-return',  'HomeController@shipping_and_return');
+
+Route :: post('buy-now-product',  'HomeController@buy_now_product');
+Route :: post('buy-now-healthbox',  'HomeController@buy_now_healthbox');
+Route :: get('buy-now-product',  'HomeController@cart');
+Route :: get('/detail',  'HomeController@detail');
+Route :: get('/cart',  'HomeController@cart');
+Route :: post('/cart-out',  'HomeController@post_cart_out');
+Route :: post('/cart-out-user',  'HomeController@post_cart_out_user');
+
+Route :: get('/check-out',  'HomeController@checkout');
+Route :: get('/check-out/payment',  'HomeController@payment');
+Route :: post('/check-out/payment',  'HomeController@final_payment');
+Route :: post('/check-out/online-payment', 'HomeController@online_payment');
+Route :: post('/check-out/cancel-payment', 'HomeController@cancel_payment');
+Route :: get('/check-out/thankyou',  'HomeController@checkout_thankyou');
+
+
+Route::get('/shop/{shop_url}', 'HomeController@product_details');
+Route::get('/healthbox/{shop_url}', 'HomeController@product_healthbox_details');
+Route::get('offer/{offer_url}', 'HomeController@offer');
+
+
+
+
+
+Route::get('/signin', 'HomeController@login');
+Route::post('/sign-in', 'HomeController@post_login');
+Route::get('/forgot-password', 'HomeController@forgot_password');
+Route::post('/check-email', 'HomeController@check_email');
+Route::post('/forgot-password', 'HomeController@post_forgot_password');
+Route::get('/reset-password/{id}', 'HomeController@reset_password');
+Route::post('/reset-password', 'HomeController@post_reset_password');
+Route::get('/signup', 'HomeController@register');
+Route::post('/signup', 'HomeController@post_register');
+Route::get('/logout', 'HomeController@logout');
+Route::post('/check-coupon', 'HomeController@check_coupon');
+Route::post('/check-out', 'HomeController@post_check_out');
+Route::get('/search-product', 'HomeController@search_product');
+Route::post('/filer-by-order', 'HomeController@filer_by_order');
+Route::get('whats-new/{url}', 'HomeController@whats_new');
+Route::get('combo/{url}', 'HomeController@combo_product');
+Route::post('get-address', 'HomeController@get_address');
+Route::get('search-result', 'HomeController@search_result');
+Route::get('search-service', 'HomeController@search_service');
+Route::post('get-size-price', 'HomeController@get_size_price');
+Route::get('get-cart-details', 'HomeController@getCartDetails');
+/*Route::post('forget-password', 'HomeController@forget_password');*/
+
+
+// send mail---------------------------------------------
+Route :: get('/thank-you/{order_id}',  'HomeController@thankyou');
+Route :: get('/my-invoice/{order_id}',  'HomeController@my_invoice');
+Route :: get('/thankyou',  'HomeController@thankyou');
+
+
+// send mail---------------------------------------------
+Route :: post('/sendmail', 'HomeController@sendmail');
+Route::post('ckeditor/image_upload', 'AdminController@uploadImage')->name('upload');
+
+/************************************* Start Card URLS **********************************************/
+Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+
+    Route::post('/add-cart-product', 'CartController@add_cart');
+    Route::post('/add-cart-healthbox', 'CartController@add_heathbox');
+
+    Route::post('/update-cart', 'CartController@updateCart');
+    Route::post('/update-service-cart', 'CartController@updateServiceCart');
+    Route::get('/remove-cart-product', 'CartController@removeCart');
+    Route::get('/remove-cart-service', 'CartController@removeServiceCart');
+
+    Route::post('/add-wishlist', 'CartController@addWishlist');
+    Route::post('/update-wishlist', 'CartController@updateWishlist');
+    Route::get('/remove-wishlist', 'CartController@removeWishlist');
+
+});
+
+Route::group(['prefix'=> 'my-profile', 'as'=> 'my-profile.'], function(){
+
+    Route::get('/my-order', 'UserProfile@my_order');
+    Route::get('/my-address', 'UserProfile@my_address');
+    Route::post('/add-address', 'UserProfile@add_address');
+    Route::get('/wishlist', 'UserProfile@wishlist');
+    Route::get('/order-tracking/{awbNo}/{order_id}', 'UserProfile@order_tracking');
+    Route::get('/invoice/{order_id}', 'UserProfile@invoice');
+    Route::get('/profile',  'UserProfile@my_profile');
+    Route::get('/order-history',  'UserProfile@order_history');
+    Route::post('/update-password',  'UserProfile@update_password');
+    Route::post('/update-profile',  'UserProfile@update_profile');
+    Route::get('/order-details/{order_id}',  'UserProfile@order_details');
+});
+
+/************************************* End My-Profile URLS **********************************************/
+
+
+
+Route::get('/dash', 'LoginController@login');
+
+Route::post('ckeditor/image_upload', 'ShopController@uploadImage')->name('upload');
+
+Route::group(['prefix'=> 'auth', 'as'=> 'auth.'], function(){
+    Route::post('login', 'LoginController@login_auth');
+    Route::get('logout', 'LoginController@logout');
+});
+
+Route::group(['prefix'=> 'admin', 'as'=> 'admin.'], function(){
+    Route::get('/dashboard', 'LoginController@dashboard');
+    Route::post('/get-address', 'LoginController@get_address');
+    Route::get('/search-customer-number', 'ShopController@search_customer_number');
+
+    Route::group(['prefix'=> 'shop', 'as'=> 'shop.'], function (){
+        //        shop Brands
+        Route::get('/shop-brand', 'ShopController@shop_brand');
+        Route::get('/new-brand', 'ShopController@new_brand');
+        Route::post('/new-brand', 'ShopController@post_new_brand');
+        Route::get('/update-brand/{id}', 'ShopController@update_brand');
+
+
+        Route::get('/all-category', 'ShopController@all_category');
+        Route::get('/new-category', 'ShopController@new_category');
+        Route::post('/new-category', 'ShopController@post_new_category');
+        Route::get('/update-category/{id}', 'ShopController@update_category');
+        
+        //        shop Product
+        Route::get('/shop-product', 'ShopController@shop_product');
+        Route::get('/new-product', 'ShopController@new_product');
+        Route::post('/new-product', 'ShopController@post_new_product');
+        Route::get('/update-shop-product/{id}', 'ShopController@update_product');
+
+        //        Shop Health Box
+        Route::get('/shop-healthbox', 'ShopController@shop_healthbox');
+        Route::get('/new-healthbox', 'ShopController@new_healthbox');
+        Route::post('/new-healthbox', 'ShopController@post_new_healthbox');
+        Route::get('/update-shop-healthbox/{id}', 'ShopController@update_healthbox');
+        //        product Gallery Status
+        Route::get('/shop-healthbox-gallery/{id}', 'ShopController@healthbox_gallery');
+        Route::post('/shop-healthbox-gallery', 'ShopController@post_healthbox_gallery');
+        //        product Banner Status
+        Route::get('/shop-healthbox-banner/{id}', 'ShopController@healthbox_banner');
+        Route::post('/shop-healthbox-banner', 'ShopController@post_healthbox_banner');
+
+        //        product Gallery Status
+        Route::get('/shop-combo-product', 'ShopController@shop_combo_product');
+        Route::get('/new-combo-product', 'ShopController@new_combo_product');
+        Route::post('/new-combo-product', 'ShopController@post_new_combo_product');
+        Route::get('/update-shop-combo-product/{id}', 'ShopController@update_combo_product');
+        //        product Gallery Status
+
+        Route::get('/shop-product-gallery/{id}', 'ShopController@product_gallery');
+        Route::get('/shop-product-banners/{id}', 'ShopController@product_banners');
+        Route::post('/shop-product-gallery', 'ShopController@post_product_gallery');
+        Route::post('/shop-product-banners', 'ShopController@post_product_banners');
+
+        Route::get('/product-faq/{id}', 'ShopController@product_faq');
+        Route::post('/product-faq', 'ShopController@post_product_faq');
+
+        Route::get('shop-product-size', 'ShopController@shop_product_size');
+        Route::post('shop-product-size', 'ShopController@post_shop_product_size');
+
+        Route::post('add-product-price', 'ShopController@add_product_price');
+
+
+        //    slider star
+        Route::get('/new-slider', 'ShopController@new_slider');
+        Route::post('/new-slider', 'ShopController@post_new_slider');
+        Route::get('/shop-slider', 'ShopController@shop_slider');
+        Route::get('/update-slider/{id}', 'ShopController@update_slider');
+
+        //    banner start
+        Route::get('/new-banner', 'ShopController@new_banner');
+        Route::post('/new-banner', 'ShopController@post_new_banner');
+        Route::get('/shop-banner', 'ShopController@shop_banner');
+        Route::get('/update-banner/{id}', 'ShopController@update_banner');
+
+        //     Home About
+        Route::get('/all-home-about', 'ShopController@all_home_about');
+        Route::post('/new-home-about', 'ShopController@new_home_about');
+
+        //     Welcome About
+        Route::get('/new-welcome-about', 'ShopController@new_welcome_about');
+        Route::post('/new-welcome-about', 'ShopController@post_new_welcome_about');
+        Route::get('/shop-welcome-about', 'ShopController@shop_welcome_about');
+        Route::get('/update-welcome-about/{id}', 'ShopController@update_welcome_about');
+
+        //     Director About
+        Route::get('/new-director-about', 'ShopController@new_director_about');
+        Route::post('/new-director-about', 'ShopController@post_new_director_about');
+        Route::get('/shop-director-about', 'ShopController@shop_director_about');
+        Route::get('/update-director-about/{id}', 'ShopController@update_director_about');
+
+        //    Testimonial start
+        Route::get('/new-testimonial', 'ShopController@new_testimonial');
+        Route::post('/new-testimonial', 'ShopController@post_new_testimonial');
+        Route::get('/shop-testimonial', 'ShopController@shop_testimonial');
+        Route::get('/update-testimonial/{id}', 'ShopController@update_testimonial');
+
+        //        update Status
+        Route::post('/update-status', 'ShopController@ajex_update_status');
+
+    });
+
+    Route::group(['prefix'=> 'order', 'as'=>'order.'], function(){
+        Route::get('all-orders', 'OrderController@all_orders');
+        Route::post('order-details', 'OrderController@order_details_ajax');
+        Route::post('order-convert-process', 'OrderController@order_convert_process');
+        Route::post('generate-shipment', 'OrderController@post_order_shipment');
+        Route::get('shipment-orders', 'OrderController@shipment_orders');
+        Route::get('shipping-orders', 'OrderController@shipping_orders');
+        Route::get('shipping-order-track/{shipping_id}', 'OrderController@shipping_order_track');
+        //Route::get('shipping-order-invoice/{shipping_id}', 'ShiprocketController@shiprocketOrderInvoice');
+        Route::get('shipping-order-detail/{shipping_id}', 'OrderController@shipping_order_detail');
+        /*Route::get('create-shipmint-order/{order_id}', 'OrderController@order_shipment');*/
+        Route::get('order-invoice/{order_id}', 'OrderController@order_invoice');
+        Route::get('new-orders', 'OrderController@new_orders');
+        Route::get('process-orders', 'OrderController@process_orders');
+    });
+
+    Route::group(['prefix'=> 'reports', 'as'=> 'reports.'], function (){
+        Route::get('/order-reports', 'ReportsController@order_reports');
+        Route::get('/customer-reports', 'ReportsController@customer_reports');
+    });
+
+    //orders
+
+});
